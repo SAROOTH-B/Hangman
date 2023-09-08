@@ -1,0 +1,83 @@
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+#include <vector>
+using namespace std;
+int main(){
+vector <string> str;
+cout<<"****************************************************************************************************************"<<"\n\nWELCOME TO HANGMAN!\n\n"<<"****************************************************************************************************************\n\n";
+
+cout<<"Instructions: \n\n->Here you have to find a word which will be related to your selected category.\n->Enter letters one by one.\n->You have five lives only.\n->So, use it wisely. Go forward :)\n\n"<<"Please select the category: "<<endl<<"1. Animals\n"<<"2. Birds\n\n";
+string category;
+cin>>category;
+cout<<endl;
+if(category=="animal"||category=="Animal"||category=="1")
+str={"sheep","elephant","mouse","horse","lion","tiger","giraffe","cheetah","cat","kangaroo"};
+else if(category=="birds"||category=="Birds"||category=="2")
+str={"peacock","eagle","crow","parrot","pigeon","owl","dove","cuckoo","hummingbird","hen"};
+else{
+cout<<"Invalid input";
+return 0;}
+string str1="";
+srand(static_cast<unsigned int>(time(nullptr)));
+string str3=str[rand()%10];
+string str2(str3.size(),' ');
+int count=0;
+int lives = 5;
+char letter;
+int flag=0;
+cout<<"Here is your word with "<<str3.size()<<" letters\n";
+
+for(int i=0;i<str3.size();i++){
+    cout<<'_';
+}
+cout<<"\n\n";
+int distinct=0;
+while(lives){
+    flag=0;
+    cout<<"Enter your letter: ";
+    cin>>letter;
+    distinct=0;
+    if(letter<'a'||letter>'z') {
+            cout<<"Enter the valid letters from 'a' to 'z'"<<endl;
+            continue;}
+
+    for(int i=0;i<str1.size();i++){
+        if(str1[i]==letter){
+        cout<<"Please enter distinct characters only"<<endl<<endl;
+        distinct=1;}
+    }
+    if(distinct) continue;
+    str1.push_back(letter);
+
+    for(int i=0;i<str3.size();i++){
+        if(str3[i]==letter){
+            count++;
+            flag=1;
+            str2[i]=str3[i];
+            }
+        }
+        for(int i=0;i<str3.size();i++){
+            if(str2[i]>='a'&&str2[i]<='z')
+            cout<<str2[i];
+            else cout<<'_';
+        }
+    cout<<"                   ";
+    cout<<"The letter(s) entered is/are ";
+
+    for(int k=0;k<str1.size();k++)
+            cout<<str1[k]<<" ";
+    cout<<endl;
+    if(count==str3.size()){
+        cout<<"\n\n\n****************************************************************************************************************"<<"\n\nYOU WON!\n\n"<<"****************************************************************************************************************\n\n";
+        return 1;
+    }
+    if(!flag) {
+        lives--;
+        cout<<"\n\nThe remaining lives are "<<lives;
+    }
+    cout<<"\n\n";
+}
+cout<<"\n\n\n****************************************************************************************************************"<<"\n\nYOU'RE HANGED\n\n"<<"****************************************************************************************************************\n\n";
+cout<<"The answer is "<<str3<<endl;
+}
